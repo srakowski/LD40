@@ -5,6 +5,8 @@
     /// </summary>
     abstract class Consequence
     {
+        public int ChanceToHappen { get; set; }
+
         public bool TargetsFighter { get; set; }
 
         public int LossToWellBeing { get; set; }
@@ -12,19 +14,19 @@
         public int LossToFightingCapability { get; set; }
     }
 
-    class Death : Consequence
+    class DeathConsequence : Consequence
     {
     }
 
-    class Bite : Consequence
+    class BiteConsequence : Consequence
     {
     }
 
-    class HarmToGroup : Consequence
+    class HarmConsequence : Consequence
     {
     }
 
-    class DamageOrLossOfFightingEquipment : Consequence
+    class DamageConsequence : Consequence
     {
     }
 }

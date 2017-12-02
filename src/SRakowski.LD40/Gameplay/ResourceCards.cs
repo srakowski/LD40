@@ -2,58 +2,58 @@
 
 namespace SRakowski.LD40.Gameplay
 {
-    abstract class Resource
+    abstract class ResourceCard
     {
-        public bool IsScouted { get; set; }
+        public string ScoutedDescription { get; }
 
-        public int GainToWellbeing { get; set; }
+        public string Description { get; }
 
-        public int GainToFightingCapability { get; set; }
+        public IEnumerable<Consequence> GrabConsequences { get; }
 
-        public int ChanceToNabWithoutConsequence { get; set; }
+        public int GainToWellbeing { get; }
 
-        public IEnumerable<Consequence> Consequences { get; set; }
+        public int GainToFightingCapability { get; }
     }
 
     /// <summary>
     /// Clothing, Teddy Bears, etc, increases wellbeing a small amount
     /// </summary>
-    class ComfortItems : Resource
+    class ComfortItemsResourceCard : ResourceCard
     {
     }
 
     /// <summary>
     /// Increases wellbeing a moderate amount
     /// </summary>
-    class FoodAndWater : Resource
+    class FoodAndWaterResourceCard : ResourceCard
     {
     }
 
     /// <summary>
     /// Increases wellbeing a lot, rare
     /// </summary>
-    class MedicineAndBandages : Resource
+    class MedicalSuppliesResourceCard : ResourceCard
     {
     }
 
     /// <summary>
     /// Boosts fighting capability, plus gives option to train new fighter
     /// </summary>
-    class Weapon : Resource
+    class WeaponResourceCard : ResourceCard
     {
     }
 
     /// <summary>
     /// Boosts fighting capability
     /// </summary>
-    class Ammo : Resource
+    class AmmoResourceCard : ResourceCard
     {
     }
 
     /// <summary>
     /// Options to Add to group/survivor, exile/execute?, effects TBD
     /// </summary>
-    class Survivor : Resource
+    class SurvivorResourceCard : ResourceCard
     {
     }
 
@@ -61,7 +61,7 @@ namespace SRakowski.LD40.Gameplay
     /// This resource is needed in combination with people in order to build a settlement
     /// as the walls are required
     /// </summary>
-    class BuildingMaterial : Resource
+    class BuildingMaterialResourceCard : ResourceCard
     {
     }
 }

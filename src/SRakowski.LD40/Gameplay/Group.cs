@@ -1,4 +1,7 @@
-﻿namespace SRakowski.LD40.Gameplay
+﻿using Microsoft.Xna.Framework;
+using System;
+
+namespace SRakowski.LD40.Gameplay
 {
     class Group
     {
@@ -14,5 +17,12 @@
         public int Size { get; set; }
 
         public int BuildingMaterials { get; set; }
+
+        public Point MapLocation { get; set; }
+
+        public static Group Create()
+        {
+            return new Group();
+        }
     }
 }

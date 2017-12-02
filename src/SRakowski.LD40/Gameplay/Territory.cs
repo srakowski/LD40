@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 
 namespace SRakowski.LD40.Gameplay
 {
@@ -24,6 +25,11 @@ namespace SRakowski.LD40.Gameplay
         public void Settle(Group group)
         {
         }
+
+        internal static Territory Generate(Random random)
+        {
+            return new RuralTerritory();
+        }
     }
 
     class UrbanTerritory : Territory
@@ -35,6 +41,10 @@ namespace SRakowski.LD40.Gameplay
     }
 
     class RuralTerritory : Territory
+    {
+    }
+
+    class WastelandTerritory : Territory
     {
     }
 }
