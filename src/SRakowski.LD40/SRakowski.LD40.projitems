@@ -9,6 +9,12 @@
     <Import_RootNamespace>SRakowski.LD40</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Consequence.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Group.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Resource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Situation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\SituationGenerator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Territory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LD40Game.cs" />
   </ItemGroup>
 </Project>
