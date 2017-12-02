@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 
 namespace SRakowski.LD40.Gameplay
 {
@@ -7,6 +8,8 @@ namespace SRakowski.LD40.Gameplay
     {
         public const int WellBeingPointsPerSurvivor = 10;
         public const int FightingCapabilityPointsPerFigher = 10;
+
+        private readonly List<ResourceCard> _resourceCards;
 
         public int WellBeing { get; set; }
 
@@ -16,13 +19,24 @@ namespace SRakowski.LD40.Gameplay
 
         public int Size { get; set; }
 
-        public int BuildingMaterials { get; set; }
-
         public Point MapLocation { get; set; }
+
+        protected Group()
+        {
+            _resourceCards = new List<ResourceCard>();
+        }
 
         public static Group Create()
         {
             return new Group();
+        }
+
+        internal void AddCards(IEnumerable<ResourceCard> resourceCards) =>
+            _resourceCards.AddRange(resourceCards);
+
+        internal void AddSurvivor(Survivor survivor)
+        {
+            throw new NotImplementedException();
         }
     }
 }

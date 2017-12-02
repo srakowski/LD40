@@ -6,18 +6,23 @@ namespace SRakowski.LD40.Gameplay
     {
         public string ThreatDescription { get; set; }
 
+        public Territory Territory { get; set; }
+
         public IEnumerable<Consequence> FightConsequences { get; set; }
 
         public IEnumerable<Consequence> FleeConsequences { get; set; }
 
-        public IEnumerable<ResourceCard> Rewards { get; set; }
+        public IEnumerable<Reward> Rewards { get; set; }
 
         protected Situation(
             string threatDescription,
-            IEnumerable<Consequence> consequences,
-            IEnumerable<ResourceCard> rewards)
+            Territory territory,
+            IEnumerable<Consequence> fightConsequences,
+            IEnumerable<Consequence> fleeConsequences,
+            IEnumerable<Reward> rewards)
         {
-            FightConsequences = consequences;
+            FightConsequences = fightConsequences;
+            FleeConsequences = fleeConsequences;
             Rewards = rewards;
         }
 
@@ -27,15 +32,15 @@ namespace SRakowski.LD40.Gameplay
         /// </summary>
         public SituationOutcome Fight(GameState gs)
         {
-            return new FightOutcome(FightConsequences, Rewards);
+            return new FightOutcome(this, "You fought...", FightConsequences, Rewards);
         }
 
         /// <summary>
         /// Somewhat risky, some reward as you may get a resource.
         /// </summary>
-        public SituationOutcome GrabAndFlee(GameState gs, ResourceCard card)
+        public SituationOutcome GrabAndFlee(GameState gs, Reward card)
         {
-            return new GrabAndFleeOutcome(card.GrabConsequences, card);
+            return new GrabAndFleeOutcome(this, "You grabbed and fleed...", card.GrabConsequences, card);
         }
 
         /// <summary>
@@ -43,7 +48,7 @@ namespace SRakowski.LD40.Gameplay
         /// </summary>
         public SituationOutcome Flee(GameState gs)
         {
-            return new FleeOutcome(FleeConsequences);
+            return new FleeOutcome(this, "You fleed...", FleeConsequences);
         }
 
         /// <summary>
@@ -55,13 +60,20 @@ namespace SRakowski.LD40.Gameplay
         {
             return new Situation(
                 "Zombie Horde",
+                territory,
                 new[]
                 {
                     new BiteConsequence(),
                 },
                 new[]
                 {
-                    new FoodAndWaterResourceCard(),
+                    new DamageConsequence(),
+                },
+                new[]
+                {
+                    new FoodAndWaterResourceCard("Box With Banana On It", new [] {
+                        new HarmConsequence(),
+                    }),
                 });
         }
     }

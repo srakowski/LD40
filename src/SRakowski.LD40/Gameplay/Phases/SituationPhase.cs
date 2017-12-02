@@ -22,10 +22,10 @@ namespace SRakowski.LD40.Gameplay.Phases
         private static Func<GameState, Phase> FightFn(Situation situation) =>
             gs => OutcomePhase.Create(situation.Fight(gs));
 
-        private static GameAction GrabAndFleeGameAction(Situation situation, ResourceCard card) =>
+        private static GameAction GrabAndFleeGameAction(Situation situation, Reward card) =>
             new GameAction($"Grab the {card.ScoutedDescription} and Flee", GrabAndFleeFn(situation, card));
 
-        private static Func<GameState, Phase> GrabAndFleeFn(Situation situation, ResourceCard card) =>
+        private static Func<GameState, Phase> GrabAndFleeFn(Situation situation, Reward card) =>
             gs => OutcomePhase.Create(situation.GrabAndFlee(gs, card));
 
         private static Func<GameState, Phase> FleeFn(Situation situation) =>

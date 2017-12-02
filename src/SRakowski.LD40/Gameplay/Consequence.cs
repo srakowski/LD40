@@ -12,21 +12,35 @@
         public int LossToWellBeing { get; set; }
 
         public int LossToFightingCapability { get; set; }
+
+        public abstract void Apply(GameState gs);
     }
 
     class DeathConsequence : Consequence
     {
+        public override void Apply(GameState gs)
+        {
+        }
     }
 
     class BiteConsequence : Consequence
     {
+        public override void Apply(GameState gs)
+        {
+        }
     }
 
     class HarmConsequence : Consequence
     {
+        public override void Apply(GameState gs)
+        {
+        }
     }
 
     class DamageConsequence : Consequence
     {
+        public override void Apply(GameState gs)
+        {
+        }
     }
 }

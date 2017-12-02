@@ -15,11 +15,15 @@
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Map.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\AcceptConsequencesPhase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\AcceptRewardsPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\MovementPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\NewSurvivorResoutionPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\OutcomePhase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\RestAndRegroupPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\SituationPhase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\ResourceCards.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Reward.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Situation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Territory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LD40Game.cs" />

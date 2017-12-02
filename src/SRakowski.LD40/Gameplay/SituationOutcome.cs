@@ -5,39 +5,46 @@ namespace SRakowski.LD40.Gameplay
 {
     abstract class SituationOutcome
     {
+        public Situation Situation { get; }
+
+        public string Description { get; }
+
         public IEnumerable<Consequence> Consequences { get; }
 
-        public IEnumerable<ResourceCard> Rewards { get; }
+        public IEnumerable<Reward> Rewards { get; }
 
         protected SituationOutcome(
+            Situation situation,
+            string description,
             IEnumerable<Consequence> consequences,
-            IEnumerable<ResourceCard> rewards)
+            IEnumerable<Reward> rewards)
         {
-            this.Consequences = consequences;
+            this.Description = description;
+            Consequences = consequences;
             this.Rewards = rewards;
         }
     }
 
     class FightOutcome : SituationOutcome
     {
-        public FightOutcome(IEnumerable<Consequence> consequences, IEnumerable<ResourceCard> rewards) 
-            : base(consequences, rewards)
+        public FightOutcome(Situation situation, string description, IEnumerable<Consequence> consequences, IEnumerable<Reward> rewards) 
+            : base(situation, description, consequences, rewards)
         {
         }
     }
 
     class GrabAndFleeOutcome : SituationOutcome
     {
-        public GrabAndFleeOutcome(IEnumerable<Consequence> consequences, ResourceCard reward) 
-            : base(consequences, new[] { reward })
+        public GrabAndFleeOutcome(Situation situation, string description, IEnumerable<Consequence> consequences, Reward reward) 
+            : base(situation, description, consequences, new[] { reward })
         {
         }
     }
 
     class FleeOutcome : SituationOutcome
     {
-        public FleeOutcome(IEnumerable<Consequence> consequences) 
-            : base(consequences, Enumerable.Empty<ResourceCard>())
+        public FleeOutcome(Situation situation, string description, IEnumerable<Consequence> consequences) 
+            : base(situation, description, consequences, Enumerable.Empty<Reward>())
         {
         }
     }
