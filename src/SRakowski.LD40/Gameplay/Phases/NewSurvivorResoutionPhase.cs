@@ -10,9 +10,9 @@ namespace SRakowski.LD40.Gameplay.Phases
         {
             var actions = new List<GameAction>();
             actions.AddRange(survivors.Select(s => IncorporateSurvivorIntoGroupAction(s, survivors, next)));
-            actions.Add(new GameAction("Get rid of them", gs => next));
+            actions.Add(new GameAction(GameActionId.IgnoreSurvivors, "Get rid of them", gs => next));
             return new Phase(
-                PhaseId.SurvivorResolution,
+                PhaseId.SurvivorResolutionPhaseId,
                 "What will you do with them?",
                 survivors,
                 actions);
@@ -20,6 +20,7 @@ namespace SRakowski.LD40.Gameplay.Phases
 
         private static GameAction IncorporateSurvivorIntoGroupAction(Survivor survivor, IEnumerable<Survivor> survivors, Phase next) =>
             new GameAction(
+                GameActionId.AcceptSurvivor,
                 $"Incorporate {survivor.Name} into your group", 
                 IncorporateSurvivorFn(survivor, survivors, next));
 

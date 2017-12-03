@@ -11,12 +11,12 @@ namespace SRakowski.LD40.Gameplay.Phases
 
 
             return new Phase(
-                PhaseId.Regroup,
+                PhaseId.RegroupPhaseId,
                 "Use resource cards and or settle this territory",
                 null,
                 new[]
                 {
-                    new GameAction("Next", gs => next)
+                    new GameAction(GameActionId.DoneRegrouping, "Next", gs => next)
                 });
         }
     }

@@ -21,12 +21,12 @@ namespace SRakowski.LD40.Gameplay.Phases
                 next = AcceptConsequencesPhase.Create(outcome.Consequences, next);
 
             return new Phase(
-                PhaseId.Outcome,
+                PhaseId.OutcomePhaseId,
                 outcome.Description,
                 null,
                 new[]
                 {
-                    new GameAction("Ok", gs => next)
+                    new GameAction(GameActionId.AckOutcome, "Ok", gs => next)
                 });
         }
     }

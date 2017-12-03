@@ -5,13 +5,13 @@ namespace SRakowski.LD40.Gameplay
     enum PhaseId
     {
         Invalid = 0,
-        Movement,
-        Situation,
-        Outcome,
-        AcceptConsequences,
-        SurvivorResolution,
-        AcceptRewards,
-        Regroup,
+        MovementPhaseId,
+        SituationPhaseId,
+        OutcomePhaseId,
+        AcceptConsequencesPhaseId,
+        SurvivorResolutionPhaseId,
+        AcceptRewardsPhaseId,
+        RegroupPhaseId,
     }
 
     class Phase
@@ -28,6 +28,7 @@ namespace SRakowski.LD40.Gameplay
         {
             Id = id;
             Description = description;
+            Context = context;
             PossibleActions = possibleActions;
         }
     }

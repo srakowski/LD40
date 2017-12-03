@@ -35,7 +35,7 @@ namespace SRakowski.LD40
 
             sceneManager.AddScene(new BackgroundScene());
             //sceneManager.AddScene(new MainMenuScene());
-            sceneManager.AddScene(GameplayScene.Create());
+            sceneManager.AddScene(MovementScene.Create());
 
             Services.AddService(context);
             Components.Add(sceneManager);

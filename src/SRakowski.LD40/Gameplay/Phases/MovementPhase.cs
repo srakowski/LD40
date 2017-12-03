@@ -8,19 +8,19 @@ namespace SRakowski.LD40.Gameplay.Phases
         public static Phase Create()
         {
             return new Phase(
-                PhaseId.Movement,
+                PhaseId.MovementPhaseId,
                 "Advance your party to the next section of the city",
                 null,
                 new[]
                 {
-                    new GameAction("Advance North West", MoveFn(NorthWest)),
-                    new GameAction("Advance North", MoveFn(North)),
-                    new GameAction("Advance North East", MoveFn(NorthEast)),
-                    new GameAction("Advance East", MoveFn(East)),
-                    new GameAction("Advance South East", MoveFn(SouthEast)),
-                    new GameAction("Advance South", MoveFn(South)),
-                    new GameAction("Advance South West", MoveFn(SouthWest)),
-                    new GameAction("Advance West", MoveFn(West)),
+                    new GameAction(GameActionId.MoveNorthWest , "Advance North West", MoveFn(NorthWest)),
+                    new GameAction(GameActionId.MoveNorth , "Advance North", MoveFn(North)),
+                    new GameAction(GameActionId.MoveNorthEast , "Advance North East", MoveFn(NorthEast)),
+                    new GameAction(GameActionId.MoveEast , "Advance East", MoveFn(East)),
+                    new GameAction(GameActionId.MoveSouthEast , "Advance South East", MoveFn(SouthEast)),
+                    new GameAction(GameActionId.MoveSouth , "Advance South", MoveFn(South)),
+                    new GameAction(GameActionId.MoveSouthWest, "Advance South West", MoveFn(SouthWest)),
+                    new GameAction(GameActionId.MoveWest, "Advance West", MoveFn(West)),
                 });
         }
 

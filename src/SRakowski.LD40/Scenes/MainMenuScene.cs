@@ -20,7 +20,7 @@ namespace SRakowski.LD40.Scenes
                     .OnClick(() =>
                     {
                         Exit();
-                        Context.SceneManager.AddScene(GameplayScene.Create());
+                        Context.SceneManager.AddScene(MovementScene.Create());
                     })
             );
 

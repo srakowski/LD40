@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using SRakowski.LD40.Engine;
+﻿using SRakowski.LD40.Engine;
 using SRakowski.LD40.Gameplay;
+using static SRakowski.LD40.Entities.MapHelper;
 
 namespace SRakowski.LD40.Entities
 {
@@ -11,7 +11,7 @@ namespace SRakowski.LD40.Entities
         public TerritoryEntity(Territory territory)
         {
             _territory = territory;
-            this.TranslateTo((territory.MapPoint.ToVector2() * new Vector2(128f, 128f)));
+            (this).TranslateTo(MapPointToScreenPos(territory.MapPoint));
             AddComponent(new SpriteRenderer("Sprites/territorybase"));
         }
     }

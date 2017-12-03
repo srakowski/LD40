@@ -9,11 +9,11 @@ namespace SRakowski.LD40.Gameplay.Phases
         public static Phase Create(Situation situation)
         {
             var actions = new List<GameAction>();
-            actions.Add(new GameAction("Fight", FightFn(situation)));
+            actions.Add(new GameAction(GameActionId.Fight, "Fight", FightFn(situation)));
             actions.AddRange(situation.Rewards.Select(c => GrabAndFleeGameAction(situation, c)));
-            actions.Add(new GameAction("Flee", FleeFn(situation)));
+            actions.Add(new GameAction(GameActionId.Flee, "Flee", FleeFn(situation)));
             return new Phase(
-                PhaseId.Situation,
+                PhaseId.SituationPhaseId,
                 "Assess and take action",
                 situation,
                 actions);
@@ -23,7 +23,7 @@ namespace SRakowski.LD40.Gameplay.Phases
             gs => OutcomePhase.Create(situation.Fight(gs));
 
         private static GameAction GrabAndFleeGameAction(Situation situation, Reward card) =>
-            new GameAction($"Grab the {card.ScoutedDescription} and Flee", GrabAndFleeFn(situation, card));
+            new GameAction(GameActionId.GrabAndFlee, $"Grab the {card.ScoutedDescription} and Flee", GrabAndFleeFn(situation, card));
 
         private static Func<GameState, Phase> GrabAndFleeFn(Situation situation, Reward card) =>
             gs => OutcomePhase.Create(situation.GrabAndFlee(gs, card));

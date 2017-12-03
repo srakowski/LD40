@@ -28,6 +28,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\Pointer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\TextInput.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\CameraEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\GroupEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\MapHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Entities\TerritoryEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Consequence.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Direction.cs" />
@@ -50,7 +52,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\SituationOutcome.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\BackgroundScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameColors.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameplayScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MovementScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenuScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\PhaseSceneFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\SituationScene.cs" />
   </ItemGroup>
 </Project>
