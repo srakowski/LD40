@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Linq;
 
 // Ahh-poh-kah-leepsa
 namespace Apokalipsa
@@ -18,6 +19,7 @@ namespace Apokalipsa
         GameBoard _board;
         Group _group;
         Input _input;
+        GameStateManager _gameStateManager;
 
         public ApokalipsaGame()
         {
@@ -28,6 +30,8 @@ namespace Apokalipsa
             _random = new Random();
             _content = new GameContent();
             _input = new Input();
+            _gameStateManager = new GameStateManager();
+            _gameStateManager.State = new MoveState();
         }
 
         protected override void Initialize()
@@ -41,13 +45,7 @@ namespace Apokalipsa
         protected override void LoadContent()
         {
             _sb = new SpriteBatch(GraphicsDevice);
-            _content.GroupIcon = Content.Load<Texture2D>("group");
-            _content.HexTile = Content.Load<Texture2D>("hextile");
-            _content.RuralIcon = Content.Load<Texture2D>("rural");
-            _content.UrbanIcon = Content.Load<Texture2D>("urban");
-            _content.SuburbanIcon = Content.Load<Texture2D>("suburban");
-            _content.SettlementIcon = Content.Load<Texture2D>("settlement");
-            _content.Direction = Content.Load<Texture2D>("direction");
+            _content.Load(Content);
         }
 
         protected override void UnloadContent()
@@ -61,9 +59,7 @@ namespace Apokalipsa
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (_input.WasKeyPressed(Keys.Left)) _group.ChangeBearingLeft();
-            if (_input.WasKeyPressed(Keys.Right)) _group.ChangeBearingRight();
-            if (_input.WasKeyPressed(Keys.Enter)) _group.ExecuteMoveToTargetGameTile();
+            _gameStateManager.Update(new GameContext(_random, _board, _group, _content, this), gameTime, _input);
 
             base.Update(gameTime);
         }
@@ -71,15 +67,55 @@ namespace Apokalipsa
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(GameColors.BackgroundColor);
+            _gameStateManager.Draw(new GameContext(_random, _board, _group, _content, this), _sb);
 
-            var groupPos = _group.GameBoardTile.CalculateDrawAt(_content);
-            _sb.Begin(transformMatrix: 
-                Matrix.Identity *
-                Matrix.CreateTranslation((GraphicsDevice.Viewport.Width * 0.5f), 256f, 0f) *
-                Matrix.CreateTranslation(-groupPos.X, -groupPos.Y, 0f));
+            _sb.Begin();
 
-                _board.Draw(_sb);
-                _group.Draw(_sb);
+            _sb.Draw(_content.Well, new Rectangle(683, 0, 341, 768), GameColors.BackgroundColor);
+            _sb.Draw(_content.Well, new Rectangle(683, 0, 12, 768), GameColors.TextColor);
+
+            int fighters = _group.FighterCount;
+            new TextSprite("GROUP:").Draw(_sb, _content, new Vector2(707, 12));
+            var startAt = new Vector2(707, 36);
+            int ypos = 0, xpos = 0;
+            for (int i = 0; i < _group.MemberCount; i++)
+            {
+                _sb.Draw(_content.GroupMemberIcon,
+                startAt + new Vector2(xpos * 24, ypos * 32),
+                fighters-- > 0 ? GameColors.FighterColor : GameColors.TileColor);
+                xpos++;
+                if (xpos >= 13)
+                {
+                    xpos = 0;
+                    ypos++;
+                }
+            }
+
+            new TextSprite("WELLNESS:").Draw(_sb, _content, new Vector2(707, 184));
+
+            new TextSprite("RESOURCES:").Draw(_sb, _content, new Vector2(707, 344));
+
+            ypos = 376;
+            new FoodAndWaterResourceCard().Draw(_sb, _content, new Vector2(707, ypos));
+            new TextSprite($"X {_group.ResourceCards.OfType<FoodAndWaterResourceCard>().Count()}")
+                .Draw(_sb, _content, new Vector2(771, ypos + 24));
+
+            new MedicalSuppliesResourceCard().Draw(_sb, _content, new Vector2(707, ypos += 76));
+            new TextSprite($"X {_group.ResourceCards.OfType<MedicalSuppliesResourceCard>().Count()}")
+                .Draw(_sb, _content, new Vector2(771, ypos + 24));
+
+            new BuildingMaterialResourceCard().Draw(_sb, _content, new Vector2(707, ypos += 76));
+            new TextSprite($"X {_group.ResourceCards.OfType<BuildingMaterialResourceCard>().Count()}")
+                .Draw(_sb, _content, new Vector2(771, ypos + 24));
+
+            new WeaponResourceCard().Draw(_sb, _content, new Vector2(707, ypos += 76));
+            new TextSprite($"X {_group.ResourceCards.OfType<WeaponResourceCard>().Count()}")
+                .Draw(_sb, _content, new Vector2(771, ypos + 24));
+
+            new AmmoResourceCard().Draw(_sb, _content, new Vector2(707, ypos += 76));
+            new TextSprite($"X {_group.ResourceCards.OfType<AmmoResourceCard>().Count()}")
+                .Draw(_sb, _content, new Vector2(771, ypos + 24));
+
 
             _sb.End();
 

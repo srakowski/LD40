@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace Apokalipsa
 {
@@ -20,6 +21,14 @@ namespace Apokalipsa
         private GameContent _content;
 
         private GameTile _tile;
+
+        public int MemberCount { get; set; } = 3;
+
+        public int FighterCount { get; set; } = 1;
+
+        public int Heath { get; set; } = 10;
+
+        public List<GameCard> ResourceCards { get; set; } = new List<GameCard>();
 
         public GameTile GameBoardTile
         {
@@ -75,6 +84,27 @@ namespace Apokalipsa
                 GroupBearing.SouthWest,
                 GroupBearing.SouthEast,
             };
+
+        internal GameCard Damage(GameContext context)
+        {
+            var cardToLose = ResourceCards.OrderBy(_ => context.Random.Next(100)).FirstOrDefault();
+            if (cardToLose != null)
+                ResourceCards.Remove(cardToLose);
+            return cardToLose;
+        }
+
+        internal void Injury(GameContext context)
+        {
+            this.Heath -= 1;
+            if (this.Heath < 0) this.Heath = 0;
+        }
+
+        internal void Death(GameContext context)
+        {
+            this.MemberCount--;
+            if (this.MemberCount < 0) this.MemberCount = 0;
+            if (this.MemberCount < this.FighterCount) this.FighterCount--;
+        }
 
         public void ExecuteMoveToTargetGameTile()
         {

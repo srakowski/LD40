@@ -11,10 +11,15 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ApokahlipsaGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameBoard.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameCard.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameColors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GameContent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MonogameExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SituationOutcomeState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)SituationState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TextSprite.cs" />
   </ItemGroup>
 </Project>
