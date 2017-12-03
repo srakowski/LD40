@@ -47,16 +47,16 @@ namespace SRakowski.LD40.Gameplay
         }
     }
 
-    /// <summary>
-    /// Clothing, Teddy Bears, etc, increases wellbeing a small amount
-    /// </summary>
-    class ComfortItemsResourceCard : ResourceCard
-    {
-        public ComfortItemsResourceCard(string scoutedDescription, IEnumerable<Consequence> grabConsequences) 
-            : base("Comfort Items", scoutedDescription, grabConsequences)
-        {
-        }
-    }
+    ///// <summary>
+    ///// Clothing, Teddy Bears, etc, increases wellbeing a small amount
+    ///// </summary>
+    //class ComfortItemsResourceCard : ResourceCard
+    //{
+    //    public ComfortItemsResourceCard(string scoutedDescription, IEnumerable<Consequence> grabConsequences) 
+    //        : base("Comfort Items", scoutedDescription, grabConsequences)
+    //    {
+    //    }
+    //}
 
     /// <summary>
     /// Increases wellbeing a moderate amount

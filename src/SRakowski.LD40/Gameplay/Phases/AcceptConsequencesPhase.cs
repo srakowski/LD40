@@ -7,7 +7,7 @@ namespace SRakowski.LD40.Gameplay.Phases
         internal static Phase Create(IEnumerable<Consequence> consequences, Phase next)
         {
             return new Phase(
-                "Consequences",
+                PhaseId.AcceptConsequences,
                 "Something went wrong...", 
                 consequences,
                 new[]

@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SRakowski.LD40.Gameplay.Phases
 {
-    static class NewSurvivorResoutionPhase
+    static class SurvivorResoutionPhase
     {
         internal static Phase Create(IEnumerable<Survivor> survivors, Phase next)
         {
@@ -12,7 +12,7 @@ namespace SRakowski.LD40.Gameplay.Phases
             actions.AddRange(survivors.Select(s => IncorporateSurvivorIntoGroupAction(s, survivors, next)));
             actions.Add(new GameAction("Get rid of them", gs => next));
             return new Phase(
-                $"You've Encountered {survivors.Count()} Survivor(s)",
+                PhaseId.SurvivorResolution,
                 "What will you do with them?",
                 survivors,
                 actions);

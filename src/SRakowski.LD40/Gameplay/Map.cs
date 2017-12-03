@@ -16,9 +16,9 @@ namespace SRakowski.LD40.Gameplay
         public static Map Generate(Random random)
         {
             var territories = new Dictionary<Point, Territory>();
-            for (int x = -9; x < 10; x++)
-                for (int y = -9; y < 10; y++)
-                    territories.Add(new Point(x, y), Territory.Generate(random));
+            for (int x = -1; x < 2; x++)
+                for (int y = -1; y < 2; y++)
+                    territories.Add(new Point(x, y), Territory.Generate(random, new Point(x, y)));
 
             return new Map(territories);
         }

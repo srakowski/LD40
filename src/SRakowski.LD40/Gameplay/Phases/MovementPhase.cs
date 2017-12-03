@@ -8,7 +8,7 @@ namespace SRakowski.LD40.Gameplay.Phases
         public static Phase Create()
         {
             return new Phase(
-                "Move",
+                PhaseId.Movement,
                 "Advance your party to the next section of the city",
                 null,
                 new[]

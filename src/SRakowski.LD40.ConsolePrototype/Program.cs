@@ -13,7 +13,7 @@ namespace SRakowski.LD40.ConsolePrototype
             var currentPhase = MovementPhase.Create();
             while (currentPhase != null)
             {
-                Console.WriteLine($"{currentPhase.Name}: {currentPhase.Description}");
+                Console.WriteLine($"{currentPhase.Id}: {currentPhase.Description}");
                 var actions = currentPhase.PossibleActions.ToList();
                 int i = 1;
                 actions.ForEach(act => Console.WriteLine($"{i++}: {act.Description}"));

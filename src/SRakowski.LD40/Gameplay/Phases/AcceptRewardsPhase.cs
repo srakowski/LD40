@@ -7,7 +7,7 @@ namespace SRakowski.LD40.Gameplay.Phases
         internal static Phase Create(IEnumerable<ResourceCard> resourceCards, Phase next)
         {
             return new Phase(
-                "Rewards",
+                PhaseId.AcceptRewards,
                 "To the victor goes the spoils...",
                 resourceCards,
                 new[]

@@ -9,6 +9,26 @@
     <Import_RootNamespace>SRakowski.LD40</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Behavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Camera.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Component.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\EngineContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Entity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\InputManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\RelayBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Renderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\SceneManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\SpriteRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\StringRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\Transform.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\Button.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\FormElement.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\Form.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\Pointer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Engine\UI\TextInput.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\CameraEntity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\TerritoryEntity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Consequence.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Direction.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\GameAction.cs" />
@@ -21,12 +41,16 @@
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\NewSurvivorResoutionPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\OutcomePhase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\RestAndRegroupPhase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\RegroupPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Phases\SituationPhase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Reward.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Situation.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Territory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LD40Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\SituationOutcome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\BackgroundScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameColors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameplayScene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenuScene.cs" />
   </ItemGroup>
 </Project>

@@ -13,7 +13,7 @@ namespace SRakowski.LD40.Gameplay.Phases
             actions.AddRange(situation.Rewards.Select(c => GrabAndFleeGameAction(situation, c)));
             actions.Add(new GameAction("Flee", FleeFn(situation)));
             return new Phase(
-                "Situation",
+                PhaseId.Situation,
                 "Assess and take action",
                 situation,
                 actions);

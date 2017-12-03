@@ -15,13 +15,13 @@ namespace SRakowski.LD40.Gameplay.Phases
                 next = AcceptRewardsPhase.Create(outcome.Rewards.OfType<ResourceCard>(), next);
 
             if (outcome.Rewards.OfType<Survivor>().Any())
-                next = NewSurvivorResoutionPhase.Create(outcome.Rewards.OfType<Survivor>(), next);
+                next = SurvivorResoutionPhase.Create(outcome.Rewards.OfType<Survivor>(), next);
 
             if (outcome.Consequences.Any())
                 next = AcceptConsequencesPhase.Create(outcome.Consequences, next);
 
             return new Phase(
-                "Outcome",
+                PhaseId.Outcome,
                 outcome.Description,
                 null,
                 new[]
@@ -31,3 +31,4 @@ namespace SRakowski.LD40.Gameplay.Phases
         }
     }
 }
+ 

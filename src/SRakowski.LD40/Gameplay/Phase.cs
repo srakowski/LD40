@@ -2,9 +2,21 @@
 
 namespace SRakowski.LD40.Gameplay
 {
+    enum PhaseId
+    {
+        Invalid = 0,
+        Movement,
+        Situation,
+        Outcome,
+        AcceptConsequences,
+        SurvivorResolution,
+        AcceptRewards,
+        Regroup,
+    }
+
     class Phase
     {
-        public string Name { get; }
+        public PhaseId Id { get; }
 
         public string Description { get; }
 
@@ -12,9 +24,9 @@ namespace SRakowski.LD40.Gameplay
 
         public IEnumerable<GameAction> PossibleActions { get; }
 
-        public Phase(string name, string description, object context,  IEnumerable<GameAction> possibleActions)
+        public Phase(PhaseId id, string description, object context,  IEnumerable<GameAction> possibleActions)
         {
-            Name = name;
+            Id = id;
             Description = description;
             PossibleActions = possibleActions;
         }

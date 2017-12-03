@@ -22,29 +22,46 @@ namespace SRakowski.LD40.Gameplay
 
         public bool IsSettled { get; private set; }
 
+        public Territory(Point mapPoint)
+        {
+            this.MapPoint = mapPoint;
+        }
+
         public void Settle(Group group)
         {
         }
 
-        internal static Territory Generate(Random random)
+        internal static Territory Generate(Random random, Point mapPoint)
         {
-            return new RuralTerritory();
+            return new RuralTerritory(mapPoint);
         }
     }
 
     class UrbanTerritory : Territory
     {
+        public UrbanTerritory(Point mapPoint) : base(mapPoint)
+        {
+        }
     }
 
     class SubUrbanTerritory : Territory
     {
+        public SubUrbanTerritory(Point mapPoint) : base(mapPoint)
+        {
+        }
     }
 
     class RuralTerritory : Territory
     {
+        public RuralTerritory(Point mapPoint) : base(mapPoint)
+        {
+        }
     }
 
     class WastelandTerritory : Territory
     {
+        public WastelandTerritory(Point mapPoint) : base(mapPoint)
+        {
+        }
     }
 }

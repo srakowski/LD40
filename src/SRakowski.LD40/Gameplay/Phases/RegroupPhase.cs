@@ -11,7 +11,7 @@ namespace SRakowski.LD40.Gameplay.Phases
 
 
             return new Phase(
-                "Rest and Regroup",
+                PhaseId.Regroup,
                 "Use resource cards and or settle this territory",
                 null,
                 new[]
