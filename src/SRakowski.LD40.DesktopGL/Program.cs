@@ -13,7 +13,7 @@ namespace SRakowski.LD40.DesktopGL
         [STAThread]
         static void Main()
         {
-            using (var game = new LD40Game())
+            using (var game = new NewGame())
                 game.Run();
         }
     }

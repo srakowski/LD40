@@ -9,6 +9,7 @@
     <Import_RootNamespace>SRakowski.LD40</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CharCellDisplay.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\Behavior.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Engine\Component.cs" />
@@ -50,8 +51,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\Territory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)LD40Game.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Gameplay\SituationOutcome.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MapRenderer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)NewGame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\BackgroundScene.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Scenes\GameColors.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameColors.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MovementScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\MainMenuScene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Scenes\PhaseSceneFactory.cs" />

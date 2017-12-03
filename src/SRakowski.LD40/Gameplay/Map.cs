@@ -15,15 +15,17 @@ namespace SRakowski.LD40.Gameplay
 
         public static Map Generate(Random random)
         {
+            int scale = 10; // 40x40ish board...
+            var center = new Point(random.Next(-(scale / 3), (scale / 3) + 1), random.Next(-(scale / 3), (scale / 3) + 1));
             var territories = new Dictionary<Point, Territory>();
-            for (int x = -1; x < 2; x++)
-                for (int y = -1; y < 2; y++)
-                    territories.Add(new Point(x, y), Territory.Generate(random, new Point(x, y)));
+            for (int y = -scale - 1; y < scale; y++)
+                for (int x = -scale + Math.Abs(y) - 1; x < scale - Math.Abs(y); x++)
+                    territories.Add(new Point(x, y), Territory.Generate(random, center, new Point(x, y)));
 
             return new Map(territories);
         }
 
         public Territory GetTerritoryAtMapLocation(Point location) =>
-            _territories[location];
+            _territories.TryGetValue(location, out Territory t) ? t : null;
     }
 }

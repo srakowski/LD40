@@ -14,7 +14,7 @@ namespace SRakowski.LD40.Gameplay
             Map = map;
         }
 
-        public static GameState Create(int? seed = 0)
+        public static GameState Create(int? seed = null)
         {
             var rng = seed.HasValue ? new Random(seed.Value) : new Random();
             return new GameState(

@@ -14,11 +14,9 @@ namespace SRakowski.LD40.Gameplay.Phases
                 new[]
                 {
                     new GameAction(GameActionId.MoveNorthWest , "Advance North West", MoveFn(NorthWest)),
-                    new GameAction(GameActionId.MoveNorth , "Advance North", MoveFn(North)),
                     new GameAction(GameActionId.MoveNorthEast , "Advance North East", MoveFn(NorthEast)),
                     new GameAction(GameActionId.MoveEast , "Advance East", MoveFn(East)),
                     new GameAction(GameActionId.MoveSouthEast , "Advance South East", MoveFn(SouthEast)),
-                    new GameAction(GameActionId.MoveSouth , "Advance South", MoveFn(South)),
                     new GameAction(GameActionId.MoveSouthWest, "Advance South West", MoveFn(SouthWest)),
                     new GameAction(GameActionId.MoveWest, "Advance West", MoveFn(West)),
                 });
@@ -27,9 +25,9 @@ namespace SRakowski.LD40.Gameplay.Phases
         private static Func<GameState, Phase> MoveFn(Direction direction) =>
             (gs) =>
             {
-                var targetMapLocation = gs.Group.MapLocation.GetPointInDirection(direction);
+                var targetMapLocation = gs.Group.MapLocation.GetPointInDirection(gs.Group.MapLocation.Y, direction);
                 var targetTerritory = gs.Map.GetTerritoryAtMapLocation(targetMapLocation);
-                if (targetTerritory is WastelandTerritory)
+                if (targetTerritory == null)
                 {
                     // make them move again
                     return Create();

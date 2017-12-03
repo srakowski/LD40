@@ -31,9 +31,28 @@ namespace SRakowski.LD40.Gameplay
         {
         }
 
-        internal static Territory Generate(Random random, Point mapPoint)
+        internal static Territory Generate(Random random, Point cityCenter, Point mapPoint)
         {
-            return new RuralTerritory(mapPoint);
+            var next = random.Next(100);
+            var distance = Vector2.Distance(cityCenter.ToVector2(), mapPoint.ToVector2());
+            if (distance < 3)
+            {
+                if (next < 2) return new RuralTerritory(mapPoint);
+                else if (next >= 40) return new UrbanTerritory(mapPoint);
+                else return new SubUrbanTerritory(mapPoint);
+            }
+            else if (distance > 10)
+            {
+                if (next < 80) return new RuralTerritory(mapPoint);
+                else if (next >= 97) return new UrbanTerritory(mapPoint);
+                else return new SubUrbanTerritory(mapPoint);
+            }
+            else
+            {
+                if (next < 20) return new RuralTerritory(mapPoint);
+                else if (next >= 80) return new UrbanTerritory(mapPoint);
+                else return new SubUrbanTerritory(mapPoint);
+            }
         }
     }
 
@@ -54,13 +73,6 @@ namespace SRakowski.LD40.Gameplay
     class RuralTerritory : Territory
     {
         public RuralTerritory(Point mapPoint) : base(mapPoint)
-        {
-        }
-    }
-
-    class WastelandTerritory : Territory
-    {
-        public WastelandTerritory(Point mapPoint) : base(mapPoint)
         {
         }
     }
