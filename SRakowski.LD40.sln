@@ -9,11 +9,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRakowski.LD40.DesktopGL", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRakowski.LD40.ConsolePrototype", "src\SRakowski.LD40.ConsolePrototype\SRakowski.LD40.ConsolePrototype.csproj", "{7D863CF8-842E-4030-A0A8-6835E7C607B9}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Apokalipsa", "Apokalipsa\Apokalipsa.shproj", "{ED3EF100-FAAC-431B-993D-EA190309F432}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apokalipsa.DesktopGL", "Apokalipsa.DesktopGL\Apokalipsa.DesktopGL.csproj", "{50A0455E-9D3C-4C8C-9EC8-30F95BD482A8}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		src\SRakowski.LD40\SRakowski.LD40.projitems*{1074f614-5689-4929-9067-3fe6091cffee}*SharedItemsImports = 4
+		Apokalipsa\Apokalipsa.projitems*{50a0455e-9d3c-4c8c-9ec8-30f95bd482a8}*SharedItemsImports = 4
 		src\SRakowski.LD40\SRakowski.LD40.projitems*{7d863cf8-842e-4030-a0a8-6835e7c607b9}*SharedItemsImports = 4
 		src\SRakowski.LD40\SRakowski.LD40.projitems*{a6e5cd05-129e-4e3b-8702-d26c4d168034}*SharedItemsImports = 13
+		Apokalipsa\Apokalipsa.projitems*{ed3ef100-faac-431b-993d-ea190309f432}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,6 +34,10 @@ Global
 		{7D863CF8-842E-4030-A0A8-6835E7C607B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D863CF8-842E-4030-A0A8-6835E7C607B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D863CF8-842E-4030-A0A8-6835E7C607B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50A0455E-9D3C-4C8C-9EC8-30F95BD482A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50A0455E-9D3C-4C8C-9EC8-30F95BD482A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50A0455E-9D3C-4C8C-9EC8-30F95BD482A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50A0455E-9D3C-4C8C-9EC8-30F95BD482A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
