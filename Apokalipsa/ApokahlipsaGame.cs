@@ -1,10 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Linq;
 
-// Ahh-poh-kah-leepsa
+// Ehh-poh-kah-leepsa
 namespace Apokalipsa
 {
     /// <summary>
@@ -20,6 +21,7 @@ namespace Apokalipsa
         Group _group;
         Input _input;
         GameStateManager _gameStateManager;
+        Song song;
 
         public ApokalipsaGame()
         {
@@ -31,21 +33,23 @@ namespace Apokalipsa
             _content = new GameContent();
             _input = new Input();
             _gameStateManager = new GameStateManager();
-            _gameStateManager.State = new MoveState();
+            _gameStateManager.State = new TitleState();
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            _board = GameBoard.Generate(_random, _content);
-            _group = new Group(_content);
-            _board.PlaceGroupOnInitialGameTile(_group);
+            NewGame();
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
         }
 
         protected override void LoadContent()
         {
             _sb = new SpriteBatch(GraphicsDevice);
             _content.Load(Content);
+            song = Content.Load<Song>("song");
         }
 
         protected override void UnloadContent()
@@ -59,15 +63,67 @@ namespace Apokalipsa
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            _gameStateManager.Update(new GameContext(_random, _board, _group, _content, this), gameTime, _input);
+            if (!_group.SurvivorCards.Any())
+            {
+                _gameStateManager.State = new GameOverState(hasWon: false);
+            }
+            else if (_group.SettledSurvivorCards.Count >= 30)
+            {
+                _gameStateManager.State = new GameOverState(hasWon: true);
+            }
+
+            _gameStateManager.Update(new GameContext(_random, _board, _group, _content, this, NewGame), gameTime, _input);
 
             base.Update(gameTime);
+        }
+
+        private void NewGame()
+        {
+            _board = GameBoard.Generate(_random, _content);
+            _group = new Group(_content);
+            _board.PlaceGroupOnInitialGameTile(_group);
+            //_group.ResourceCards.AddRange(new GameCard[]
+            //{
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new BuildingMaterialResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new FoodAndWaterResourceCard(),
+            //    new WeaponResourceCard(),
+            //    new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),new WeaponResourceCard(),
+            //    new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),new AmmoResourceCard(),
+            //});
+            //_group.SurvivorCards.AddRange(new[]
+            //{
+            //    new SurvivorCard(true),
+            //    new SurvivorCard(true),
+            //    new SurvivorCard(true),
+            //    new SurvivorCard(true),new SurvivorCard(true),new SurvivorCard(true),
+            //    new SurvivorCard(true),
+            //    new SurvivorCard(),
+            //    new SurvivorCard(),
+            //    new SurvivorCard(),
+            //    new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),
+            //    new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),new SurvivorCard(),
+            //});
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(GameColors.BackgroundColor);
-            _gameStateManager.Draw(new GameContext(_random, _board, _group, _content, this), _sb);
+            _gameStateManager.Draw(new GameContext(_random, _board, _group, _content, this, NewGame), _sb);
+
+            if (_gameStateManager.State is TitleState) return;
 
             _sb.Begin();
 

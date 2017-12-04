@@ -84,7 +84,7 @@ namespace Apokalipsa
     /// </summary>
     class SurvivorCard : GameCard
     {
-        public bool Fighter { get; }
+        public bool Fighter { get; set; }
         public SurvivorCard(bool fighter = false) : base(5)
         {
             this.Fighter = fighter;

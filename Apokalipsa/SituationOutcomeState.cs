@@ -32,9 +32,12 @@ namespace Apokalipsa
             {
                 if (!_hasAcked)
                 {
+                    if (context.Group.Wellness == 0)
+                        context.Group.Desert();
+
                     if (outcome.Action != 0)
                         context.Group.Attrition();
-                    
+
                     foreach (var card in outcome.GainedResources)
                     {
                         if (card is SurvivorCard scard) context.Group.SurvivorCards.Add(scard);
@@ -101,6 +104,13 @@ namespace Apokalipsa
             {
                 new TextSprite("WELLNESS POINTS DECREASED BY 1 BECAUSE YOU CANNOT STOP TO REST. " +
                     "YOU MUST FIGHT TO REST.").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+                ypos += 64;
+            }
+
+            if (context.Group.Wellness == 0)
+            {
+                new TextSprite("WELLNESS IS AT 0. A MEMBER OF YOUR GROUP HAS DESERTED")
+                    .Draw(spriteBatch, context.Content, new Vector2(12, ypos));
                 ypos += 64;
             }
 

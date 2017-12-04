@@ -2,9 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Apokalipsa
 {
@@ -15,14 +12,16 @@ namespace Apokalipsa
         public Group Group { get; }
         public GameContent Content { get; }
         public Game Game { get; }
+        public Action Reset { get; }
 
-        public GameContext(Random random, GameBoard board, Group group, GameContent content, Game game)
+        public GameContext(Random random, GameBoard board, Group group, GameContent content, Game game, Action reset)
         {
             this.Random = random;
             this.Board = board;
             this.Group = group;
             this.Content = content;
             this.Game = game;
+            this.Reset = reset;
         }
     }
 
@@ -63,7 +62,10 @@ namespace Apokalipsa
             if (input.WasKeyPressed(Keys.Enter))
             {
                 context.Group.ExecuteMoveToTargetGameTile();
-                Manager.State = new SituationState(context);
+                if (!context.Group.GameBoardTile.IsSettled)
+                {
+                    Manager.State = new SituationState(context);
+                }
             }
         }
 
@@ -82,7 +84,9 @@ namespace Apokalipsa
             spriteBatch.End();
 
             spriteBatch.Begin();
-            new TextSprite("THE CITY OF KASPRZAK").Draw(spriteBatch, context.Content, new Vector2(12, 16));
+            new TextSprite("MOVEMENT PHASE:").Draw(spriteBatch, context.Content, new Vector2(12, 16));
+            new TextSprite("THE CITY OF KASPRZAK").Draw(spriteBatch, context.Content, new Vector2(12, 40));
+            new TextSprite($"YOU HAVE SETTLED {context.Group.SettledSurvivorCards.Count} OF 30").Draw(spriteBatch, context.Content, new Vector2(12, 64));
             spriteBatch.End();
         }
     }

@@ -114,7 +114,7 @@ namespace Apokalipsa
                 case 1: Description += "bandits. "; break;
                 case 2: Description += "thugs. "; break;
             }
-            Description += "You can try fighting them, you can try grabbing something and running away, or you can just run away...";
+            Description += "You can try fighting them, you can try looting and running away, or you can just run away...";
             Description = Description.ToUpper();
 
             Resources = new List<GameCard>();

@@ -20,7 +20,7 @@ namespace Apokalipsa
                 _selectedAction -= 1;
                 Message = "";
             }
-            if (input.WasKeyPressed(Keys.Down)) 
+            if (input.WasKeyPressed(Keys.Down))
             {
                 _selectedAction += 1;
                 Message = "";
@@ -35,11 +35,19 @@ namespace Apokalipsa
                 }
                 else if (_selectedAction == 1)
                 {
-                    if (!context.Group.TryUpWellness1(CostFor1Wellness())) Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION!";
+                    if (!context.Group.AtFullWellness)
+                    {
+                        if (!context.Group.TryUpWellness1(CostFor1Wellness())) Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION!";
+                    }
+                    else Message = "GROUP WELLNESS IS AT MAXIMUM";
                 }
                 else if (_selectedAction == 2)
                 {
-                    if (!context.Group.TryUpWellness3(CostFor3Wellness())) Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION!";
+                    if (!context.Group.AtFullWellness)
+                    {
+                        if (!context.Group.TryUpWellness3(CostFor3Wellness())) Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION!";
+                    }
+                    else Message = "GROUP WELLNESS IS AT MAXIMUM";
                 }
                 else if (_selectedAction == 3)
                 {
@@ -47,7 +55,10 @@ namespace Apokalipsa
                 }
                 else if (_selectedAction == 4)
                 {
-                    if (!context.Group.TrySettle(CostToSettle(context))) Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION!";
+                    if (context.Group.GameBoardTile.IsSettled)
+                        Message = "YOU HAVE ALREADY SETTLED THIS TERRITORY";
+                    else if (!context.Group.TrySettle(CostToSettle(context)))
+                        Message = "NOT ENOUGH RESOURCES TO PERFORM THIS ACTION! NOTE: YOU MUST HAVE ENOUGH SURVIVORS IN YOUR GROUP TO CONTINUE ON.";
                 }
             }
         }
@@ -57,13 +68,13 @@ namespace Apokalipsa
             spriteBatch.Begin();
 
             int ypos = 16;
-            int inc = 120;
+            int inc = 112;
             int xOff = 96;
 
             new TextSprite("REST AND REGROUP PHASE:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
             new TextSprite("IN THIS PHASE YOU MAY SPEND RESOURCE CARDS").Draw(spriteBatch, context.Content, new Vector2(12, ypos + 32));
 
-            ypos += 76;
+            ypos += 36;
             spriteBatch.Draw(context.Content.HexTile, new Vector2(12, ypos + 24), _selectedAction == 0 ? GameColors.TextColor : GameColors.TileColor);
             if (_selectedAction == 0)
             {
@@ -123,7 +134,7 @@ namespace Apokalipsa
             {
                 spriteBatch.Draw(context.Content.GroupIcon, new Vector2(28, ypos + 40), GameColors.GroupColor);
             }
-            new TextSprite("CREATE A SETTLEMENT ON THIS TILE, COST:").Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
+            new TextSprite("CREATE A SETTLEMENT ON THIS TERRITORY, COST:").Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
             i = 0;
             GameCard[] costToSettle = CostToSettle(context);
 
@@ -137,6 +148,9 @@ namespace Apokalipsa
                     ypos += 76;
                 }
             }
+
+            ypos += inc;
+            new TextSprite(Message).Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
 
             spriteBatch.End();
         }

@@ -58,6 +58,11 @@ namespace Apokalipsa
             var drawAt = new Vector2(xPos, yPos);
             return drawAt;
         }
+
+        public void Settle()
+        {
+            this.IsSettled = true;
+        }
     }
 
     class GameBoard

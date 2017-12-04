@@ -26,11 +26,15 @@ namespace Apokalipsa
 
         public int FighterCount => SurvivorCards.Where(sc => sc.Fighter).Count();
 
+        public bool AtFullWellness => Wellness == 12;
+
         public int Wellness { get; set; } = 12;
 
         public List<GameCard> ResourceCards { get; set; } = new List<GameCard>();
 
         public List<SurvivorCard> SurvivorCards { get; set; } = new List<SurvivorCard>();
+
+        public List<SurvivorCard> SettledSurvivorCards { get; set; } = new List<SurvivorCard>();
 
         public GameTile GameBoardTile
         {
@@ -44,6 +48,13 @@ namespace Apokalipsa
 
         public GroupBearing Bearing { get; set; }
 
+        internal void Desert()
+        {
+            var card = this.SurvivorCards.OrderBy(sc => sc.Fighter).FirstOrDefault();
+            if (card == null) return;
+            this.SurvivorCards.Remove(card);
+        }
+
         public Group(GameContent content)
         {
             _content = content;
@@ -54,22 +65,26 @@ namespace Apokalipsa
 
         internal bool TryUpWellness1(GameCard[] neededCards)
         {
-            var haveResources = true;
             var listCards = new List<GameCard>();
             var survivorCards = new List<SurvivorCard>();
-            haveResources = NewMethod(neededCards, haveResources, listCards, survivorCards);
-
+            bool haveResources = AquireCards(neededCards, listCards, survivorCards);
+            if (!haveResources)
+                return false;
             this.Wellness += 1;
             this.Wellness = MathHelper.Clamp(this.Wellness, 0, 12);
+            return true;
         }
 
-        private bool NewMethod(GameCard[] neededCards, bool haveResources, List<GameCard> listCards, List<SurvivorCard> survivorCards)
+        private bool AquireCards(GameCard[] neededCards, List<GameCard> listCards, List<SurvivorCard> survivorCards)
         {
+            var haveResources = true;
             foreach (var card in neededCards)
             {
                 if (card is SurvivorCard sc)
                 {
-                    var next = SurvivorCards.Where(c => c.Fighter == sc.Fighter).FirstOrDefault();
+                    var next = sc.Fighter ? 
+                        SurvivorCards.Where(c => c.Fighter).FirstOrDefault() :
+                        SurvivorCards.Where(c => !c.Fighter).FirstOrDefault();
                     if (next == null)
                     {
                         ResourceCards.AddRange(listCards);
@@ -77,8 +92,8 @@ namespace Apokalipsa
                         haveResources = false;
                         break;
                     }
-                    SurvivorCards.Remove(sc);
-                    listCards.Add(sc);
+                    SurvivorCards.Remove(next);
+                    survivorCards.Add(sc);
                 }
                 else
                 {
@@ -100,7 +115,14 @@ namespace Apokalipsa
 
         internal bool TryUpWellness3(GameCard[] neededCards)
         {
-            throw new NotImplementedException();
+            var listCards = new List<GameCard>();
+            var survivorCards = new List<SurvivorCard>();
+            bool haveResources = AquireCards(neededCards, listCards, survivorCards);
+            if (!haveResources)
+                return false;
+            this.Wellness += 3;
+            this.Wellness = MathHelper.Clamp(this.Wellness, 0, 12);
+            return true;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -133,12 +155,34 @@ namespace Apokalipsa
 
         internal bool TryUpgradeFighter(GameCard[] neededCards)
         {
-            throw new NotImplementedException();
+            var listCards = new List<GameCard>();
+            var survivorCards = new List<SurvivorCard>();
+            bool haveResources = AquireCards(neededCards, listCards, survivorCards);
+            if (!haveResources)
+                return false;
+            survivorCards.FirstOrDefault().Fighter = true;
+            SurvivorCards.AddRange(survivorCards);
+            return true;
         }
 
         internal bool TrySettle(GameCard[] neededCards)
         {
-            throw new NotImplementedException();
+            var listCards = new List<GameCard>();
+            var survivorCards = new List<SurvivorCard>();
+            bool haveResources = AquireCards(neededCards, listCards, survivorCards);
+            if (!haveResources)
+                return false;
+
+            if (!SurvivorCards.Any()) // maybe if on last settlemnt
+            {
+                ResourceCards.AddRange(listCards);
+                SurvivorCards.AddRange(survivorCards);
+                return false;
+            }
+
+            SettledSurvivorCards.AddRange(survivorCards);
+            this.GameBoardTile.Settle();
+            return true;
         }
 
         internal void Attrition()
