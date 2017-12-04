@@ -151,10 +151,10 @@ namespace Apokalipsa
             for (int i = 0; i < count; i++)
             {
                 var value = rand.Next(0, 100);
-                if (value < 60) yield return new FoodAndWaterResourceCard();
-                else if (value < 70) yield return new BuildingMaterialResourceCard();
-                else if (value < 80) yield return new MedicalSuppliesResourceCard();
-                else if (value < 85) yield return new AmmoResourceCard();
+                if (value < 40) yield return new FoodAndWaterResourceCard();
+                else if (value < 50) yield return new BuildingMaterialResourceCard();
+                else if (value < 60) yield return new MedicalSuppliesResourceCard();
+                else if (value < 80) yield return new AmmoResourceCard();
                 else if (value < 90) yield return new WeaponResourceCard();
                 else if (value < 100) yield return new SurvivorCard();
             }
