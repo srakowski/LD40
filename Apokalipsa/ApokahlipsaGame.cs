@@ -82,7 +82,7 @@ namespace Apokalipsa
             {
                 _sb.Draw(_content.GroupMemberIcon,
                 startAt + new Vector2(xpos * 24, ypos * 32),
-                fighters-- > 0 ? GameColors.FighterColor : GameColors.TileColor);
+                fighters-- > 0 ? GameColors.FighterColor : GameColors.TextColor);
                 xpos++;
                 if (xpos >= 13)
                 {
@@ -92,6 +92,19 @@ namespace Apokalipsa
             }
 
             new TextSprite("WELLNESS:").Draw(_sb, _content, new Vector2(707, 184));
+            startAt = new Vector2(707, 208);
+            ypos = 0; xpos = 0;
+            for (int i = 0; i < _group.Wellness; i++)
+            {
+                _sb.Draw(_content.WellnessIcon,
+                startAt + new Vector2(xpos * 38, ypos * 38),GameColors.TextColor);
+                xpos++;
+                if (xpos >= 6)
+                {
+                    xpos = 0;
+                    ypos++;
+                }
+            }
 
             new TextSprite("RESOURCES:").Draw(_sb, _content, new Vector2(707, 344));
 

@@ -19,7 +19,7 @@ namespace Apokalipsa
                 content.Cards,
                 drawAt,
                 source,
-                GameColors.CardColor,
+                this is SurvivorCard s && s.Fighter ? GameColors.FighterColor : GameColors.CardColor,
                 0f,
                 Vector2.Zero, //new Vector2(CARDW * 0.5f, CARDH * 0.5f),
                 1f,
@@ -84,8 +84,10 @@ namespace Apokalipsa
     /// </summary>
     class SurvivorCard : GameCard
     {
-        public SurvivorCard() : base(5)
+        public bool Fighter { get; }
+        public SurvivorCard(bool fighter = false) : base(5)
         {
+            this.Fighter = fighter;
         }
     }
 

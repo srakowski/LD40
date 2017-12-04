@@ -18,6 +18,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Group.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MonogameExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)RestState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SituationOutcomeState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)SituationState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TextSprite.cs" />

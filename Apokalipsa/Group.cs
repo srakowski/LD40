@@ -22,13 +22,15 @@ namespace Apokalipsa
 
         private GameTile _tile;
 
-        public int MemberCount { get; set; } = 3;
+        public int MemberCount => SurvivorCards.Count();
 
-        public int FighterCount { get; set; } = 1;
+        public int FighterCount => SurvivorCards.Where(sc => sc.Fighter).Count();
 
-        public int Heath { get; set; } = 10;
+        public int Wellness { get; set; } = 12;
 
         public List<GameCard> ResourceCards { get; set; } = new List<GameCard>();
+
+        public List<SurvivorCard> SurvivorCards { get; set; } = new List<SurvivorCard>();
 
         public GameTile GameBoardTile
         {
@@ -45,6 +47,60 @@ namespace Apokalipsa
         public Group(GameContent content)
         {
             _content = content;
+            this.SurvivorCards.Add(new SurvivorCard(true));
+            this.SurvivorCards.Add(new SurvivorCard());
+            this.SurvivorCards.Add(new SurvivorCard());
+        }
+
+        internal bool TryUpWellness1(GameCard[] neededCards)
+        {
+            var haveResources = true;
+            var listCards = new List<GameCard>();
+            var survivorCards = new List<SurvivorCard>();
+            haveResources = NewMethod(neededCards, haveResources, listCards, survivorCards);
+
+            this.Wellness += 1;
+            this.Wellness = MathHelper.Clamp(this.Wellness, 0, 12);
+        }
+
+        private bool NewMethod(GameCard[] neededCards, bool haveResources, List<GameCard> listCards, List<SurvivorCard> survivorCards)
+        {
+            foreach (var card in neededCards)
+            {
+                if (card is SurvivorCard sc)
+                {
+                    var next = SurvivorCards.Where(c => c.Fighter == sc.Fighter).FirstOrDefault();
+                    if (next == null)
+                    {
+                        ResourceCards.AddRange(listCards);
+                        SurvivorCards.AddRange(survivorCards);
+                        haveResources = false;
+                        break;
+                    }
+                    SurvivorCards.Remove(sc);
+                    listCards.Add(sc);
+                }
+                else
+                {
+                    var next = ResourceCards.Where(c => c.GetType() == card.GetType()).FirstOrDefault();
+                    if (next == null)
+                    {
+                        ResourceCards.AddRange(listCards);
+                        SurvivorCards.AddRange(survivorCards);
+                        haveResources = false;
+                        break;
+                    }
+                    ResourceCards.Remove(next);
+                    listCards.Add(next);
+                }
+            }
+
+            return haveResources;
+        }
+
+        internal bool TryUpWellness3(GameCard[] neededCards)
+        {
+            throw new NotImplementedException();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -75,6 +131,22 @@ namespace Apokalipsa
                 1f);
         }
 
+        internal bool TryUpgradeFighter(GameCard[] neededCards)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal bool TrySettle(GameCard[] neededCards)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void Attrition()
+        {
+            this.Wellness -= 1;
+            if (this.Wellness < 0) this.Wellness = 0;
+        }
+
         private static GroupBearing[] _bearings { get; } =
             new[] {
                 GroupBearing.East,
@@ -95,15 +167,15 @@ namespace Apokalipsa
 
         internal void Injury(GameContext context)
         {
-            this.Heath -= 1;
-            if (this.Heath < 0) this.Heath = 0;
+            this.Wellness -= 1;
+            if (this.Wellness < 0) this.Wellness = 0;
         }
 
         internal void Death(GameContext context)
         {
-            this.MemberCount--;
-            if (this.MemberCount < 0) this.MemberCount = 0;
-            if (this.MemberCount < this.FighterCount) this.FighterCount--;
+            var value = this.SurvivorCards.OrderBy(s => s.Fighter).FirstOrDefault();
+            if (value == null) return;
+            this.SurvivorCards.Remove(value);
         }
 
         public void ExecuteMoveToTargetGameTile()

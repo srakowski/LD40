@@ -123,9 +123,9 @@ namespace Apokalipsa
             RunRisks = new List<Risk>();
 
             if (context.Group.GameBoardTile.Type == GameTileType.Rural)
-                AddResourcesInRange(2, 4, 50, context);
+                AddResourcesInRange(2, 4, 10, context);
             else if (context.Group.GameBoardTile.Type == GameTileType.Suburban)
-                AddResourcesInRange(3, 6, 50, context);
+                AddResourcesInRange(3, 6, 30, context);
             else if (context.Group.GameBoardTile.Type == GameTileType.Urban)
                 AddResourcesInRange(4, 8, 50, context);
         }
@@ -217,7 +217,7 @@ namespace Apokalipsa
             int inc = 120;
             int xOff = 96;
 
-            new TextSprite("ACTION ROUND:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+            new TextSprite("ACTION PHASE:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
             new TextSprite(Description).Draw(spriteBatch, context.Content, new Vector2(12, ypos + 32));
 
             ypos += inc;

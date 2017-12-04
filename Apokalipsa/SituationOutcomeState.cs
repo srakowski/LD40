@@ -28,15 +28,16 @@ namespace Apokalipsa
 
         public override void Update(GameContext context, GameTime gameTime, Input input)
         {
-            //if (input.WasKeyPressed(Keys.Left)) context.Group.ChangeBearingLeft();
-            //if (input.WasKeyPressed(Keys.Right)) context.Group.ChangeBearingRight();
             if (input.WasKeyPressed(Keys.Enter))
             {
                 if (!_hasAcked)
                 {
+                    if (outcome.Action != 0)
+                        context.Group.Attrition();
+                    
                     foreach (var card in outcome.GainedResources)
                     {
-                        if (card is SurvivorCard) context.Group.MemberCount++;
+                        if (card is SurvivorCard scard) context.Group.SurvivorCards.Add(scard);
                         else context.Group.ResourceCards.Add(card);
                     }
                     foreach (var card in outcome.Consequences)
@@ -54,7 +55,8 @@ namespace Apokalipsa
                 }
                 else
                 {
-
+                    if (outcome.Action != 0) Manager.State = new MoveState();
+                    else Manager.State = new RestState();
                 }
             }
         }
@@ -75,6 +77,12 @@ namespace Apokalipsa
                     card.Draw(spriteBatch, context.Content, new Vector2(12 + (i++ * 64), ypos + 32));
                 ypos += inc;
             }
+            else
+            {
+                new TextSprite("NO RESOURCE CARDS WERE GAINED").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+                ypos += 32;
+            }
+
             if (outcome.Consequences.Any())
             {
                 new TextSprite("CONSEQUENCES:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
@@ -83,10 +91,17 @@ namespace Apokalipsa
                     card.Draw(spriteBatch, context.Content, new Vector2(12 + (i++ * 64), ypos + 32));
                 ypos += inc;
             }
-            if (!outcome.Consequences.Any() && !outcome.GainedResources.Any())
+            else
             {
-                new TextSprite("YOU GAINED NOTHING, BUT YOU ALSO LOST NOTHING").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+                new TextSprite("NO HARM HAS BEFELL YOUR GROUP").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
                 ypos += 32;
+            }
+
+            if (outcome.Action != 0)
+            {
+                new TextSprite("WELLNESS POINTS DECREASED BY 1 BECAUSE YOU CANNOT STOP TO REST. " +
+                    "YOU MUST FIGHT TO REST.").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+                ypos += 64;
             }
 
             new TextSprite("PRESS ENTER TO ACKNOWLEDGE...").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
@@ -94,73 +109,8 @@ namespace Apokalipsa
 
             if (_hasAcked)
             {
-                new TextSprite("PRESS ENTER TO CONTINUE").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
+                new TextSprite("PRESS ENTER TO CONTINUE...").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
             }
-
-            //int ypos = 16;
-            //int inc = 120;
-            //int xOff = 96;
-
-            //new TextSprite("THREAT DESCRIPTION:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
-            //new TextSprite(Description).Draw(spriteBatch, context.Content, new Vector2(12, ypos + 32));
-
-            //ypos += inc;
-            //new TextSprite("SCOUTED RESOURCES:").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
-
-            //int i = 0;
-            //foreach (var card in Resources)
-            //    card.Draw(spriteBatch, context.Content, new Vector2(12 + (i++ * 64), ypos + 32));
-
-            //ypos += inc;
-            //new TextSprite("FIGHT").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
-            //spriteBatch.Draw(context.Content.HexTile, new Vector2(12, ypos + 24), _selectedAction == 0 ? GameColors.TextColor : GameColors.TileColor);
-            //if (_selectedAction == 0)
-            //{
-            //    spriteBatch.Draw(context.Content.GroupIcon, new Vector2(28, ypos + 40), GameColors.GroupColor);
-            //}
-
-            //new TextSprite("RISKS:").Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
-            //i = 0;
-            //foreach (var risk in FightRisks)
-            //{
-            //    risk.Card.Draw(spriteBatch, context.Content, new Vector2(xOff + (i * 64), ypos + 24));
-            //    new TextSprite(risk.ChanceOfHappening.ToString()).Draw(spriteBatch, context.Content, new Vector2(xOff + 12 + (i * 64), ypos + 88));
-            //    i++;
-            //}
-
-            //ypos += inc;
-            //new TextSprite("LOOT").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
-            //spriteBatch.Draw(context.Content.HexTile, new Vector2(12, ypos + 24), _selectedAction == 1 ? GameColors.TextColor : GameColors.TileColor);
-            //if (_selectedAction == 1)
-            //{
-            //    spriteBatch.Draw(context.Content.GroupIcon, new Vector2(28, ypos + 40), GameColors.GroupColor);
-            //}
-
-            //new TextSprite("RISKS:").Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
-            //i = 0;
-            //foreach (var risk in GrabAndRunRisks)
-            //{
-            //    risk.Card.Draw(spriteBatch, context.Content, new Vector2(xOff + (i * 64), ypos + 24));
-            //    new TextSprite(risk.ChanceOfHappening.ToString()).Draw(spriteBatch, context.Content, new Vector2(xOff + 12 + (i * 64), ypos + 88));
-            //    i++;
-            //}
-
-            //ypos += inc;
-            //new TextSprite("RUN").Draw(spriteBatch, context.Content, new Vector2(12, ypos));
-            //spriteBatch.Draw(context.Content.HexTile, new Vector2(12, ypos + 24), _selectedAction == 2 ? GameColors.TextColor : GameColors.TileColor);
-            //if (_selectedAction == 2)
-            //{
-            //    spriteBatch.Draw(context.Content.GroupIcon, new Vector2(28, ypos + 40), GameColors.GroupColor);
-            //}
-
-            //new TextSprite("RISKS:").Draw(spriteBatch, context.Content, new Vector2(xOff, ypos));
-            //i = 0;
-            //foreach (var risk in RunRisks)
-            //{
-            //    risk.Card.Draw(spriteBatch, context.Content, new Vector2(xOff + (i * 64), ypos + 24));
-            //    new TextSprite(risk.ChanceOfHappening.ToString()).Draw(spriteBatch, context.Content, new Vector2(xOff + 12 + (i * 64), ypos + 88));
-            //    i++;
-            //}
 
             spriteBatch.End();
         }
